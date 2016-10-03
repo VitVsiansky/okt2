@@ -1,0 +1,32 @@
+{
+  "name": "okt2",
+  "private": true,
+  "scripts": {
+    "start": "meteor run"
+  },
+  "dependencies": {
+    "babel-polyfill": "^6.16.0",
+    "classnames": "^2.2.5",
+    "crypto": "0.0.3",
+    "email-validator": "^1.0.7",
+    "flexboxgrid": "^6.3.1",
+    "font-awesome": "^4.6.3",
+    "history": "^4.3.0",
+    "lodash": "^4.16.2",
+    "material-ui": "^0.15.4",
+    "meteor-node-stubs": "~0.2.0",
+    "react": "^15.3.2",
+    "react-addons-pure-render-mixin": "^15.3.2",
+    "react-codemirror": "^0.2.6",
+    "react-dom": "^15.3.2",
+    "react-dropzone": "^3.6.0",
+    "react-flexbox-grid": "^0.10.2",
+    "react-motion": "^0.4.5",
+    "react-progress-deck": "0.0.4",
+    "react-router": "^2.8.1",
+    "react-select": "^1.0.0-rc.2",
+    "react-tap-event-plugin": "^1.0.0",
+    "react-tween-state": "^0.1.5",
+    "superagent": "^2.3.0"
+  }
+}
