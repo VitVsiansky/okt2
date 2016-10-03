@@ -8,6 +8,7 @@ import Register from "./components/authentication/register";
 import TopicsView from "./components/topics_view";
 import AddTopic from "./components/administration/add_topic";
 import AddCard from "./components/administration/add_card";
+import Study from "./components/actions/study";
 
 const routes = (
     <Router history={browserHistory}>
@@ -15,6 +16,7 @@ const routes = (
         <Route path="/login" component={Login} />
         <Route path="/" component={App}>
             <IndexRoute component={TopicsView}/>
+            <Route path = "/studovat" component={Study} />
             <Route path="/admin">
                 <Route path="/admin/pridattema" component={AddTopic}/>
                 <Route path="/admin/pridatkartu" component={AddCard}/>

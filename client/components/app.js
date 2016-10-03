@@ -8,7 +8,7 @@ import ThemeDefault from '../themes/theme-default';
 import Data from '../themes/data';
 import Header from "./layouts/header";
 import TrackerReact from 'meteor/ultimatejs:tracker-react';
-import {Link, browserHistory} from 'react-router';
+import {browserHistory} from 'react-router';
 import { CardLogs } from "../../imports/collections/cardlogs";
 import { Topics } from "../../imports/collections/topics";
 import _ from "lodash";
@@ -25,59 +25,61 @@ class App extends TrackerReact(React.Component) {
 
     constructQueue() {
         Meteor.subscribe("users.card.logs");
-        Meteor.subscribe("topics");
-        var topics = Topics.find({});
-        var today = new Date();
-        today.setHours(23);
-        var due = CardLogs.find({ "dueDate" : {"$lt" : today }});
+        Meteor.subscribe("topics", () => {
+            var topics = Topics.find({}).fetch();
 
+            //Queue resets every day after 23:00
+            var today = new Date();
+            today.setHours(23);
 
+            //Find and sort users cards by dueDate
+            var due = CardLogs.find({ "dueDate" : {"$lt" : today }}, {sort: {dueDate: 1}});
 
+            //Build a queue using the fetched cards from CardLogs collection
+            var queue =[];
 
-        var queue =[];
-console.log(due);
-
-        due.forEach((cardLog) => {
-            Meteor.subscribe("topics", () => {
-                this.findTopic(cardLog);
-                if (this.props.card) {
-                    this.props.card = _.filter(this.props.card.cards, {_id: cardLog._id});
-                    var card = this.props.card[0];
-                    console.log(card);
+            due.forEach((cardLog) => {
+                var filtered = _.filter(topics, {cards: [{_id: cardLog.cardId}] });
+                if(filtered[0]) {
+                    card = _.filter(filtered[0].cards, {_id: cardLog.cardId});
                     queue.push(card);
                 }
-
-                console.log(queue);
-
             });
 
+            queue = [].concat.apply([], queue);
+
+             if(queue != []) {
+             this.setState({
+             queue: queue
+             });
+
+             }
         });
 
-
-
-
-    }
-
-    findTopic(cardLog) {
-        this.props.card = Topics.findOne({"cards._id":cardLog._id}, {_id:0, "cards": 1});
-        console.log(this.props.card);
     }
 
     getMeteorData(){
         return { isAuthenticated: Meteor.userId() !== null,
-                navDrawerOpen: false};
+            navDrawerOpen: false,
+            queue: []};
     }
 
     componentWillMount(){
         if (!this.state.isAuthenticated) {
             browserHistory.push('/login');
         }
+        this.constructQueue();
     }
 
-    componentDidUpdate(prevProps, prevState){
+    componentDidUpdate(){
         if (!this.state.isAuthenticated) {
             browserHistory.push('/login');
         }
+
+    }
+
+    componentDidMount() {
+        this.constructQueue();
     }
 
     componentWillReceiveProps(nextProps) {
@@ -92,8 +94,9 @@ console.log(due);
         });
     }
 
-    render() {
 
+
+    render() {
         let { navDrawerOpen } = this.state;
         const paddingLeftDrawerOpen = 236;
 
@@ -108,31 +111,26 @@ console.log(due);
         };
 
 
+        return (
+            <MuiThemeProvider muiTheme={ThemeDefault}>
+                <div>
 
-{this.constructQueue()}
-        var topics = Topics.find({}).fetch();
-        console.log(topics);
-        var filtered = _.filter(topics, {cards: [{_id: 'PKNDdkJgrjNeauiHX'}] });
-        console.log(filtered);
-    return (
-        <MuiThemeProvider muiTheme={ThemeDefault}>
-            <div>
-
-             <Header styles={styles.header}
-             handleChangeRequestNavDrawer={this.handleChangeRequestNavDrawer.bind(this)}/>
+                    <Header styles={styles.header}
+                            handleChangeRequestNavDrawer={this.handleChangeRequestNavDrawer.bind(this)}/>
 
 
-                <Sidebar navDrawerOpen={navDrawerOpen}
-                            menus={Data.menus}
-                            username="User Admin"
-               />
+                    <Sidebar navDrawerOpen={navDrawerOpen}
+                             menus={Data.menus}
+                             username="User Admin"
+                             queue={this.state.queue}
+                    />
 
-                <div style={styles.container}>
-                    {this.props.children}
+                    <div style={styles.container}>
+                        {React.cloneElement(this.props.children, { queue: this.state.queue })}
+                    </div>
                 </div>
-            </div>
-        </MuiThemeProvider>
-    );}
+            </MuiThemeProvider>
+        );}
 }
 
 
