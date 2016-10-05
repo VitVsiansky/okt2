@@ -20,7 +20,6 @@ class TopicsList extends Component {
     getAllChildren(children) {
         var fetchedChildren = Topics.find({ _id: { $in: children}}).fetch();
 
-        console.log(fetchedChildren);
         return fetchedChildren.map(child =>
             <ListItem key={child._id}
                       primaryText={child.name}

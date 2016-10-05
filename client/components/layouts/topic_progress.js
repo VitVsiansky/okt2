@@ -41,7 +41,7 @@ class TopicProgress extends TrackerReact(Component) {
         var topicCardsIds = fetchedCards.map(function(a) {return a._id;});
         var userCardsIds = Meteor.users.find(Accounts.userId(), {fields: {activeCards:1}}).fetch()[0].activeCards;
 
-        console.log(userCardsIds);
+
 
         var cardsIntersection = topicCardsIds.filter(function(n) {
             if(userCardsIds == undefined) {
@@ -51,9 +51,7 @@ class TopicProgress extends TrackerReact(Component) {
             return userCardsIds.indexOf(n) != -1;
         });
 
-        console.log(topicCardsIds.length - cardsIntersection.length);
-        console.log(topicCardsIds.length);
-        console.log(cardsIntersection.length);
+
 
 
 

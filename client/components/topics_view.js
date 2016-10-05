@@ -23,7 +23,6 @@ class TopicsView extends Component {
     }
 
     render() {
-        console.log(this.props.params.topic);
         return (
 
             <Grid>

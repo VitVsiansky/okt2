@@ -67,17 +67,13 @@ class AddCardsFromTopic extends TrackerReact(Component) {
         var topicCardsIds = fetchedCards.map(function(a) {return a._id;});
         var userCardsIds = Meteor.users.find(Accounts.userId(), {fields: {activeCards:1}}).fetch()[0].activeCards;
 
-        console.log(userCardsIds);
 
         var cardsIntersection = topicCardsIds.filter(function(n) {
             if(userCardsIds == undefined) {
-                console.log("returning");
                 return 0;
             }
             return userCardsIds.indexOf(n) != -1;
         });
-
-console.log(topicCardsIds.length - cardsIntersection.length);
 
 
 
@@ -118,18 +114,15 @@ console.log(topicCardsIds.length - cardsIntersection.length);
 
         cardsIds.forEach((id) => {
             Meteor.call("add.new.card.to.logs", id);
-            console.log("adding to logs");
         });
 
 
         //Update today to do
         var userCardsIds = Meteor.users.find(Accounts.userId(), {fields: {activeCards:1}}).fetch()[0].activeCards;
 
-        console.log(userCardsIds);
 
         var cardsIntersection = cardsIds.filter(function(n) {
             if(userCardsIds == undefined) {
-                console.log("returning");
                 return 0;
             }
             return userCardsIds.indexOf(n) != -1;

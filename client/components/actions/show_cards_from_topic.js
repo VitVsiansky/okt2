@@ -66,11 +66,9 @@ class ShowCardsFromTopic extends TrackerReact(Component) {
 
     render() {
         var cards = this.getCards();
-        console.log(cards);
         if(!cards) {
             cards = [];
         }
-        console.log(cards);
 
         return (
             <div>

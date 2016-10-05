@@ -3,8 +3,10 @@ import {Card, CardActions, CardHeader, CardMedia, CardTitle, CardText} from 'mat
 import AddCardsFromTopic from "./actions/add_cards_from_topic";
 import TopicProgress from "./layouts/topic_progress";
 import ShowCardsFromTopic from "./actions/show_cards_from_topic";
+import Drill from "./actions/drill";
 
 class TopicDetail extends Component {
+
     renderImage() {
         if(this.props.selectedTopic.sampleImage) {
             return (
@@ -16,6 +18,7 @@ class TopicDetail extends Component {
     }
 
     render() {
+
         return (
 
             <Card>
@@ -28,6 +31,7 @@ class TopicDetail extends Component {
             Aliquam dui mauris, mattis quis lacus id, pellentesque lobortis odio.
         </CardText>
                 <div style={{marginBottom: 15}}>
+                <Drill selectedTopic={this.props.selectedTopic}/>
                 <ShowCardsFromTopic selectedTopic={this.props.selectedTopic}/>
                     </div>
                 <AddCardsFromTopic selectedTopic={this.props.selectedTopic}/>
