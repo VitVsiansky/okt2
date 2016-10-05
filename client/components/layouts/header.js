@@ -37,7 +37,7 @@ class Header extends React.Component {
             <div>
                 <AppBar
                     style={{...styles, ...style.appBar}}
-                    title="okt2"
+                    title=""
                     iconElementLeft={
                         <IconButton style={style.menuButton} onClick={handleChangeRequestNavDrawer}>
                             <Menu color={white} />
@@ -47,23 +47,12 @@ class Header extends React.Component {
                         <div style={style.iconsRightContainer}>
                             <IconMenu color={white}
                                       iconButtonElement={
-                                          <IconButton><ViewModule color={white}/></IconButton>
-                                      }
-                                      targetOrigin={{horizontal: 'right', vertical: 'top'}}
-                                      anchorOrigin={{horizontal: 'right', vertical: 'top'}}
-                            >
-                                <MenuItem key={1} primaryText="Application 1"/>
-                                <MenuItem key={2} primaryText="Application 2"/>
-                                <MenuItem key={3} primaryText="Application 3"/>
-                            </IconMenu>
-                            <IconMenu color={white}
-                                      iconButtonElement={
                                           <IconButton><MoreVertIcon color={white}/></IconButton>
                                       }
                                       targetOrigin={{horizontal: 'right', vertical: 'top'}}
                                       anchorOrigin={{horizontal: 'right', vertical: 'top'}}
                             >
-                                <MenuItem primaryText="Sign out"
+                                <MenuItem primaryText="Odhlásit se"
                                           onClick={this.logout}
 
                                 />

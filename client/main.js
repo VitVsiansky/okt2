@@ -9,17 +9,20 @@ import TopicsView from "./components/topics_view";
 import AddTopic from "./components/administration/add_topic";
 import AddCard from "./components/administration/add_card";
 import Study from "./components/actions/study";
+import TodayToDo from "./components/layouts/today_to_do";
+import Dashboard from "./components/dashboard/dashboard";
 
 const routes = (
     <Router history={browserHistory}>
         <Route path="/register" component={Register} />
         <Route path="/login" component={Login} />
         <Route path="/" component={App}>
-            <IndexRoute component={TopicsView}/>
-            <Route path = "/studovat" component={Study} />
-            <Route path="/admin">
-                <Route path="/admin/pridattema" component={AddTopic}/>
-                <Route path="/admin/pridatkartu" component={AddCard}/>
+            <IndexRoute component={Dashboard}/>
+            <Route path = "studovat" component={Study} />
+            <Route path = "temata/:topic" component={TopicsView} />
+            <Route path="admin">
+                <Route path="pridattema" component={AddTopic}/>
+                <Route path="pridatkartu" component={AddCard}/>
             </Route>
         </Route>
     </Router>

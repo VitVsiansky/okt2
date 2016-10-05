@@ -2,6 +2,7 @@ import { Meteor } from 'meteor/meteor';
 
 import { Topics } from "../imports/collections/topics";
 import { CardLogs } from "../imports/collections/cardlogs";
+import { ToDo } from "../imports/collections/todo";
 
 Meteor.startup(() => {
     Meteor.publish("topics", function () {
@@ -12,6 +13,13 @@ Meteor.startup(() => {
     });
     Meteor.publish("users.card.logs", function () {
         return CardLogs.find({userId:this.userId});
+    });
+
+    Meteor.publish("users.today.todo", function () {
+        return ToDo.find({userId:this.userId, date: moment().endOf("day").toDate()});
+    });
+    Meteor.publish("users.all.todo", function () {
+        return ToDo.find({userId:this.userId});
     });
 
     Cloudinary.config({

@@ -5,7 +5,7 @@ import RaisedButton from 'material-ui/RaisedButton';
 import Snackbar from 'material-ui/Snackbar';
 import Dialog from 'material-ui/Dialog';
 import FlatButton from 'material-ui/FlatButton';
-import { CardLogs } from "../../../imports/collections/cardlogs";
+import NoteAdd from 'material-ui/svg-icons/action/note-add';
 
 class AddCardsFromTopic extends TrackerReact(Component) {
     constructor(props) {
@@ -78,6 +78,11 @@ class AddCardsFromTopic extends TrackerReact(Component) {
         });
 
 console.log(topicCardsIds.length - cardsIntersection.length);
+
+
+
+
+
         return topicCardsIds.length - cardsIntersection.length;
 
 
@@ -108,12 +113,29 @@ console.log(topicCardsIds.length - cardsIntersection.length);
         fetchedCards.push(this.props.selectedTopic.cards);
         fetchedCards = [].concat.apply([], fetchedCards);
 
+
         var cardsIds = fetchedCards.map(function(a) {return a._id;});
 
         cardsIds.forEach((id) => {
             Meteor.call("add.new.card.to.logs", id);
             console.log("adding to logs");
         });
+
+
+        //Update today to do
+        var userCardsIds = Meteor.users.find(Accounts.userId(), {fields: {activeCards:1}}).fetch()[0].activeCards;
+
+        console.log(userCardsIds);
+
+        var cardsIntersection = cardsIds.filter(function(n) {
+            if(userCardsIds == undefined) {
+                console.log("returning");
+                return 0;
+            }
+            return userCardsIds.indexOf(n) != -1;
+        });
+
+        Meteor.call("update.todo.on.cards.add", cardsIds.length - cardsIntersection.length);
 
         //Update the user collection with card Ids
         Meteor.call("add.card.ids.to.user", cardsIds, (error, result) => {
@@ -135,6 +157,11 @@ console.log(topicCardsIds.length - cardsIntersection.length);
     render() {
         Meteor.subscribe('users.cards');
         var remainingCards = this.countRemainingCards();
+        if (remainingCards === 0) {
+            var disableAddTopic = true;
+        } else {
+            var disableAddTopic = false;
+        }
 
         const actions = [
             <FlatButton
@@ -152,7 +179,14 @@ console.log(topicCardsIds.length - cardsIntersection.length);
 
         return (
             <div>
-                <RaisedButton onClick={this.handleOpen}>Přidat koncepty</RaisedButton>
+                <RaisedButton onClick={this.handleOpen}
+                              label="Přidat koncepty"
+                              primary={true}
+                              icon={<NoteAdd />}
+                              fullWidth={true}
+                              labelPosition="before"
+                              disabled={disableAddTopic}
+                />
                 <Dialog
                     title="Přidat koncepty"
                     actions={actions}

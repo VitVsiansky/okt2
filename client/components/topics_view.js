@@ -1,6 +1,6 @@
 import React, { Component } from "react";
-import ReactDOM from "react-dom";
 import { createContainer } from "meteor/react-meteor-data";
+import { Grid, Row, Col } from 'meteor/lifefilm:react-flexbox-grid';
 import {List} from 'material-ui/List';
 import { Topics } from "../../imports/collections/topics";
 
@@ -23,20 +23,23 @@ class TopicsView extends Component {
     }
 
     render() {
+        console.log(this.props.params.topic);
         return (
 
-            <div>
-                <div style={{ display: "flex"}}>
-                    <div style={{width: "30%"}}>
+            <Grid>
+                <Row>
+                    <Col md={4}>
                         <TopicDetail selectedTopic={this.state.selectedTopic}/>
-                    </div>
-                    <div style={{width: "70%", margin: "3%"}}>
+                    </Col>
+                    <Col md={8}>
                         <List>
-                            <TopicsList onSelect={this.onSelect.bind(this)}/>
+                            <TopicsList onSelect={this.onSelect.bind(this)}
+                                        viewTopic={this.props.params.topic}
+                            />
                         </List>
-                    </div>
-                </div>
-            </div>
+                    </Col>
+                </Row>
+            </Grid>
 
         );
     }

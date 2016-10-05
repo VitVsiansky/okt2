@@ -4,22 +4,17 @@ import {spacing, typography} from 'material-ui/styles';
 import {white, blue600} from 'material-ui/styles/colors';
 import MenuItem from 'material-ui/MenuItem';
 import {Link} from 'react-router';
-import Avatar from 'material-ui/Avatar';
 import { createContainer } from "meteor/react-meteor-data";
 import TrackerReact from 'meteor/ultimatejs:tracker-react';
+import Person from 'material-ui/svg-icons/social/person';
+import FitnessCenter from 'material-ui/svg-icons/places/fitness-center';
+import ClassIcon from 'material-ui/svg-icons/action/class';
+import AddToPhotos from 'material-ui/svg-icons/image/add-to-photos';
+import BorderColor from 'material-ui/svg-icons/editor/border-color';
 
 
 class Sidebar extends TrackerReact(React.Component) {
 
-/*    getMeteorData() {
-        const handle = Meteor.subscribe("userEmail");
-        var data = {};
-        if (handle.ready()) {
-            console.log(Meteor.users.findOne({_id: this.userId}, { emails:1}));
-            data = Meteor.users.findOne({_id: this.userId}, { emails:1});
-        }
-        return data;
-    }*/
 
     fetchEmail() {
         var email = Meteor.user();
@@ -30,6 +25,7 @@ class Sidebar extends TrackerReact(React.Component) {
             return "";
         }
     }
+
 
     render() {
         const styles = {
@@ -50,7 +46,7 @@ class Sidebar extends TrackerReact(React.Component) {
             avatar: {
                 div: {
                     padding: '15px 0 20px 15px',
-                    /*                backgroundImage:  'url(' + require('https://udemy-images.udemy.com/user/50x50/8227778_05bc.jpg') + ')',*/
+                    backgroundImage: "url('http://res.cloudinary.com/oktavian/image/upload/v1475619644/source_images/material_bg.png')",
                     height: 45
                 },
                 icon: {
@@ -82,15 +78,59 @@ class Sidebar extends TrackerReact(React.Component) {
                     <span style={styles.avatar.span}>{this.fetchEmail()}</span>
                 </div>
                 <div>
-                    {this.props.menus.map((menu, index) =>
-                        <MenuItem
-                            key={index}
-                            style={styles.menuItem}
-                            primaryText={menu.text}
-                            leftIcon={menu.icon}
-                            containerElement={<Link to={menu.link}/>}
+                    <MenuItem
+                        key={5}
+                        style={styles.menuItem}
+                        primaryText="Profil"
+                        leftIcon={<Person />}
+                        containerElement={<Link to="/"/>}
+                    />
+                    <MenuItem
+                        key={1}
+                        style={styles.menuItem}
+                        primaryText="Studovat"
+                        leftIcon={<FitnessCenter />}
+                        containerElement={<Link to="/studovat"/>}
+                    />
+                    <MenuItem
+                        key={2}
+                        style={styles.menuItem}
+                        primaryText="Témata"
+                        leftIcon={<ClassIcon />}
+                        menuItems={[
+                            <MenuItem
+                                primaryText="Anatomie"
+                                containerElement={<Link to="/temata/anatomie"/>}
+                            />,
+                            <MenuItem
+                                primaryText="Show"
+                            />,
+                            <MenuItem
+                                primaryText="Show"
+                            />,
+                            <MenuItem
+                                primaryText="Show"
+                            />,
+                            <MenuItem
+                                primaryText="Show"
+                            />
+
+                        ]}
                         />
-                    )}
+                    <MenuItem
+                        key={3}
+                        style={styles.menuItem}
+                        primaryText="Přidat téma"
+                        leftIcon={<AddToPhotos />}
+                        containerElement={<Link to="/admin/pridattema"/>}
+                    />
+                    <MenuItem
+                        key={4}
+                        style={styles.menuItem}
+                        primaryText="Přidat kartu"
+                        leftIcon={<BorderColor />}
+                        containerElement={<Link to="/admin/pridatkartu"/>}
+                    />
 
                 </div>
             </Drawer>
@@ -99,7 +139,7 @@ class Sidebar extends TrackerReact(React.Component) {
     }
 
 
-};
+}
 
 Sidebar.propTypes = {
     navDrawerOpen: PropTypes.bool,

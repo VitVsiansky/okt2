@@ -1,7 +1,5 @@
 import React from 'react';
 import Assessment from 'material-ui/svg-icons/action/assessment';
-import GridOn from 'material-ui/svg-icons/image/grid-on';
-import PermIdentity from 'material-ui/svg-icons/action/perm-identity';
 import Web from 'material-ui/svg-icons/av/web';
 import {cyan600, pink600, purple600} from 'material-ui/styles/colors';
 import ExpandLess from 'material-ui/svg-icons/navigation/expand-less';
@@ -10,9 +8,11 @@ import ChevronRight from 'material-ui/svg-icons/navigation/chevron-right';
 
 const data = {
     menus: [
-        { text: 'Přidat téma', icon: <Assessment/>, link: '/pridattema' },
-        { text: 'Předměty', icon: <Web/>, link: '/' },
-        { text: 'admin', icon: <Assessment/>, link: '/pridattema' }
+        { text: 'Profil', icon: <Assessment/>, link: '/' },
+        { text: 'Studovat', icon: <Assessment/>, link: '/studovat' },
+        { text: 'Témata', icon: <Web/>, link: '/temata' },
+        { text: 'Přidat téma', icon: <Assessment/>, link: '/admin/pridattema' },
+        { text: 'Přidat kartu', icon: <Assessment/>, link: '/admin/pridatkartu' }
     ],
     tablePage: {
         items: [

@@ -11,6 +11,7 @@ import TrackerReact from 'meteor/ultimatejs:tracker-react';
 import {browserHistory} from 'react-router';
 import { CardLogs } from "../../imports/collections/cardlogs";
 import { Topics } from "../../imports/collections/topics";
+import { ToDo } from "../../imports/collections/todo";
 import _ from "lodash";
 
 // Needed for onTouchTap
@@ -48,7 +49,11 @@ class App extends TrackerReact(React.Component) {
 
             queue = [].concat.apply([], queue);
 
+
              if(queue != []) {
+
+                 Meteor.call("set.today.todo", queue.length);
+
              this.setState({
              queue: queue
              });
@@ -58,10 +63,26 @@ class App extends TrackerReact(React.Component) {
 
     }
 
+    setTodayToDoCount(cardCount) {
+        var toDos = JSON.parse(localStorage.getItem("TodayToDoCount"));
+        toDos = _.filter(toDos, {date: moment().startOf('day')});
+        toDos = _.filter(toDos, {userId: Meteor.userId()});
+
+        console.log(toDos);
+        if(!toDos) {
+            toDos.push({
+                date: moment().startOf('day'),
+                userId: Meteor.userId(),
+
+            })
+        }
+    }
+
     getMeteorData(){
         return { isAuthenticated: Meteor.userId() !== null,
             navDrawerOpen: false,
-            queue: []};
+            queue: [],
+            cardsToDoCount: []};
     }
 
     componentWillMount(){
@@ -86,6 +107,7 @@ class App extends TrackerReact(React.Component) {
         if (this.props.width !== nextProps.width) {
             this.setState({navDrawerOpen: nextProps.width === LARGE});
         }
+        this.constructQueue();
     }
 
     handleChangeRequestNavDrawer() {

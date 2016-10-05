@@ -27,7 +27,7 @@ class TopicCardsTable extends TrackerReact(React.Component) {
                     <TableRow>
                         <TableHeaderColumn>Otázka</TableHeaderColumn>
                         <TableHeaderColumn>Odpověď</TableHeaderColumn>
-                        <TableHeaderColumn>img</TableHeaderColumn>
+                        <TableHeaderColumn>Obrázek</TableHeaderColumn>
                     </TableRow>
                 </TableHeader>
                 <TableBody displayRowCheckbox={false}>
