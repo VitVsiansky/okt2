@@ -5,12 +5,12 @@ import RaisedButton from 'material-ui/RaisedButton';
 import FlatButton from 'material-ui/FlatButton';
 import {grey500, white} from 'material-ui/styles/colors';
 import PersonAdd from 'material-ui/svg-icons/social/person-add';
-import Help from 'material-ui/svg-icons/action/help';
 import TextField from 'material-ui/TextField';
-import {Link, browserHistory } from 'react-router';
+import { browserHistory } from 'react-router';
 import ThemeDefault from '../../themes/theme-default';
 import EmailValidator from "email-validator";
 import Snackbar from 'material-ui/Snackbar';
+import {typography} from 'material-ui/styles';
 
 const styles = {
     loginContainer: {
@@ -64,6 +64,12 @@ const styles = {
     btnSpan: {
         marginLeft: 5
     },
+    title: {
+        fontSize: 24,
+        fontWeight: typography.fontWeightLight,
+        marginBottom: 10,
+        textAlign: "center"
+    }
 };
 
 var Register = React.createClass({
@@ -125,7 +131,9 @@ var Register = React.createClass({
                     <div style={styles.loginContainer}>
 
                         <Paper style={styles.paper}>
-
+                            <div style={styles.title}>
+                                Registrujte se
+                            </div>
                             <form>
                                 <TextField
                                     hintText="E-mail"
@@ -135,8 +143,8 @@ var Register = React.createClass({
                                     value={this.state.email}
                                 />
                                 <TextField
-                                    hintText="Password"
-                                    floatingLabelText="Password"
+                                    hintText="Heslo"
+                                    floatingLabelText="Heslo"
                                     fullWidth={true}
                                     type="password"
                                     onChange={this.passwordChange}

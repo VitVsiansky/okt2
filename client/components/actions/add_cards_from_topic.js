@@ -18,7 +18,7 @@ class AddCardsFromTopic extends TrackerReact(Component) {
         this.state = {
             snackbarOpen: false,
             snackbarMessage: "",
-            dialogOpen: false
+            dialogOpen: false,
         }
     }
 
@@ -35,6 +35,7 @@ class AddCardsFromTopic extends TrackerReact(Component) {
             snackbarOpen: false,
         });
     }
+
 
     countRemainingCards() {
         Meteor.subscribe("topics");
@@ -115,7 +116,6 @@ class AddCardsFromTopic extends TrackerReact(Component) {
         cardsIds.forEach((id) => {
             Meteor.call("add.new.card.to.logs", id);
         });
-
 
         //Update today to do
         var userCardsIds = Meteor.users.find(Accounts.userId(), {fields: {activeCards:1}}).fetch()[0].activeCards;

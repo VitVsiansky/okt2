@@ -13,7 +13,11 @@ Meteor.methods({
                 // last interval is in minutes
                 lastInterval: 0,
                 repCount: 0,
-                history: []
+                history: [],
+                againCount: 0,
+                hardCount: 0,
+                goodCount: 0,
+                easyCount: 0
 
             },
             {upsert:true}
@@ -26,6 +30,10 @@ Meteor.methods({
         const EF = card.EF;
         const repCount = card.repCount;
         const lastInterval = card.lastInterval;
+        const againCount = card.againCount;
+        const hardCount = card.hardCount;
+        const goodCount = card.goodCount;
+        const easyCount = card.easyCount;
 
         function computeEF(quality) {
             var resultingEF;
@@ -85,7 +93,8 @@ Meteor.methods({
                     dueDate: moment(23, "HH").toDate(),
                     EF: computeEF("again"),
                     lastInterval: 0,
-                    repCount: 0
+                    repCount: 0,
+                    againCount: againCount+1
                 });
         }
 
@@ -98,7 +107,8 @@ Meteor.methods({
                     dueDate: computeDueDate(computeEF("good")),
                     EF: computeEF("good"),
                     lastInterval: setLastInterval(computeEF("good")),
-                    repCount: repCount+1
+                    repCount: repCount+1,
+                    goodCount: goodCount+1
                 });
 
             CardLogs.update({
@@ -115,7 +125,8 @@ Meteor.methods({
                     dueDate: computeDueDate(computeEF("hard")),
                     EF: computeEF("hard"),
                     lastInterval: setLastInterval(computeEF("hard")),
-                    repCount: repCount+1
+                    repCount: repCount+1,
+                    hardCount: hardCount+1
                 });
 
             CardLogs.update({
@@ -132,7 +143,8 @@ Meteor.methods({
                     dueDate: computeDueDate(computeEF("easy")),
                     EF: computeEF("easy"),
                     lastInterval: setLastInterval(computeEF("easy")),
-                    repCount: repCount+1
+                    repCount: repCount+1,
+                    easyCount: easyCount+1
                 });
 
             CardLogs.update({

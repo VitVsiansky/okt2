@@ -20,28 +20,30 @@ class TopicDetail extends Component {
     render() {
 
         return (
-
-            <Card>
-                {this.renderImage()}
-            <CardTitle title={this.props.selectedTopic.name}    />
-            <CardText>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-            Donec mattis pretium massa. Aliquam erat volutpat. Nulla facilisi.
-            Donec vulputate interdum sollicitudin. Nunc lacinia auctor quam sed pellentesque.
-            Aliquam dui mauris, mattis quis lacus id, pellentesque lobortis odio.
-        </CardText>
-                <div style={{marginBottom: 15}}>
-                <Drill selectedTopic={this.props.selectedTopic}/>
-                <ShowCardsFromTopic selectedTopic={this.props.selectedTopic}/>
+            <div>
+{/*                {this.renderDetail()}*/}
+                <Card>
+                    {this.renderImage()}
+                    <CardTitle title={this.props.selectedTopic.name}    />
+                    <CardText>
+                        Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                        Donec mattis pretium massa. Aliquam erat volutpat. Nulla facilisi.
+                        Donec vulputate interdum sollicitudin. Nunc lacinia auctor quam sed pellentesque.
+                        Aliquam dui mauris, mattis quis lacus id, pellentesque lobortis odio.
+                    </CardText>
+                    <div style={{marginBottom: 15}}>
+                        <Drill selectedTopic={this.props.selectedTopic}/>
+                        <ShowCardsFromTopic selectedTopic={this.props.selectedTopic}/>
                     </div>
-                <AddCardsFromTopic selectedTopic={this.props.selectedTopic}/>
-        <CardActions>
-            <div style={{marginTop:20, marginBottom:20}}>
-            <TopicProgress selectedTopic={this.props.selectedTopic}/>
-                </div>
+                    <AddCardsFromTopic selectedTopic={this.props.selectedTopic}/>
+                    <CardActions>
+                        <div style={{marginTop:20, marginBottom:20}}>
+                            <TopicProgress selectedTopic={this.props.selectedTopic}/>
+                        </div>
 
-            </CardActions>
-            </Card>
+                    </CardActions>
+                </Card>
+            </div>
         );
 
     }

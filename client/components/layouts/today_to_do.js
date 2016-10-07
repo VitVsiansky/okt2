@@ -5,7 +5,7 @@ import _ from "lodash";
 import TrackerReact from 'meteor/ultimatejs:tracker-react';
 import LinearProgress from 'material-ui/LinearProgress';
 
-class TodayToDo extends TrackerReact(React.Component) {
+class TodayToDo extends TrackerReact(Component) {
     constructor(props) {
         super(props);
         this.state = {
@@ -20,7 +20,6 @@ class TodayToDo extends TrackerReact(React.Component) {
 
             logs = _.filter(logs, {history: [{reviewedAt: moment().endOf("day").toDate()}]});
             var cardsDoneToday = logs.length;
-            console.log(cardsDoneToday);
             this.setState({
                 cardsDoneToday: cardsDoneToday
             });
@@ -30,9 +29,7 @@ class TodayToDo extends TrackerReact(React.Component) {
 
     countCardsToDo() {
         Meteor.subscribe("users.today.todo", () => {
-            console.log(ToDo.find({}).fetch());
             var cardsToDo = ToDo.find({}).fetch()[0].count;
-            console.log("to do" + cardsToDo);
             this.setState({
                 cardsToDo: cardsToDo
             });

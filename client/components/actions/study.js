@@ -7,11 +7,15 @@ import TodayToDo from "../layouts/today_to_do";
 import FontIcon from 'material-ui/FontIcon';
 import {BottomNavigation, BottomNavigationItem} from 'material-ui/BottomNavigation';
 import {greenA200} from 'material-ui/styles/colors';
+import { browserHistory } from "react-router";
+import KeyHandler, {KEYPRESS} from 'react-key-handler';
 
 class Study extends Component {
 
     constructor(props) {
         super(props);
+
+        this.handleDoneDialogClose = this.handleDoneDialogClose.bind(this);
 
         this.state = {
             queue: [],
@@ -20,20 +24,15 @@ class Study extends Component {
         }
     }
 
-
     componentWillReceiveProps(props) {
-        console.log("recieving props");
-        console.log(props);
         this.setState({
             queue: props.queue
         });
-        console.log(this.state);
     }
 
     componentDidMount() {
 
         {this.renderToDo()}
-        console.log("did mount");
     }
 
     renderToDo() {
@@ -61,13 +60,12 @@ class Study extends Component {
             queue.shift();
 
             if(queue.length === 0) {
-                console.log("ALL DONE");
+
             } else {
                 this.setState({
                     queue: queue,
                     showAnswer: false
                 });
-                console.log(this.state.queue);
             }
         } else {
 
@@ -85,7 +83,6 @@ class Study extends Component {
                     queue: queue,
                     showAnswer: false
                 });
-                console.log(this.state.queue);
             }
 
         }
@@ -97,8 +94,23 @@ class Study extends Component {
         })
     }
 
-    handleDoneDialogClose() {
-        this.setState({doneDialogOpen: false});
+    handleSpaceEnter() {
+        if(!this.state.showAnswer) {
+            this.showAnswer();
+        } else {
+            this.answerCard("good");
+        }
+    }
+
+    handleNumberKeypress(quality) {
+        if(this.state.showAnswer) {
+            this.answerCard(quality);
+        }
+    }
+
+    handleDoneDialogClose() {/*
+     this.setState({doneDialogOpen: false});*/
+        browserHistory.push('/')
     }
 
     renderFront() {
@@ -133,7 +145,6 @@ class Study extends Component {
 
     renderBack() {
         if(this.state.showAnswer) {
-            console.log("back");
             return (
                 <div>
                     <Paper zDepth={2} style={{marginTop: 20, paddingBottom: 40}}>
@@ -175,17 +186,27 @@ class Study extends Component {
             <FlatButton
                 label="Zpátky"
                 primary={true}
-                onTouchTap={() => this.handleDoneDialogClose}
+                onTouchTap={() => this.handleDoneDialogClose()}
             />
         ];
 
-        console.log(this.props);
         return (
             <div>
                 {this.renderToDo()}
                 {this.renderFront()}
                 {this.renderShowButton()}
                 {this.renderBack()}
+                <KeyHandler keyEventName={KEYPRESS} keyValue="Enter" onKeyHandle={() => this.handleSpaceEnter()} />
+                <KeyHandler keyEventName={KEYPRESS} keyValue=" " onKeyHandle={() => this.handleSpaceEnter()} />
+                <KeyHandler keyEventName={KEYPRESS} keyValue="1" onKeyHandle={() => this.handleNumberKeypress("again")} />
+                <KeyHandler keyEventName={KEYPRESS} keyValue="2" onKeyHandle={() => this.handleNumberKeypress("hard")} />
+                <KeyHandler keyEventName={KEYPRESS} keyValue="3" onKeyHandle={() => this.handleNumberKeypress("good")} />
+                <KeyHandler keyEventName={KEYPRESS} keyValue="4" onKeyHandle={() => this.handleNumberKeypress("easy")} />
+                <KeyHandler keyEventName={KEYPRESS} keyCode={43} onKeyHandle={() => this.handleNumberKeypress("again")} />
+                <KeyHandler keyEventName={KEYPRESS} keyCode={283} onKeyHandle={() => this.handleNumberKeypress("hard")} />
+                <KeyHandler keyEventName={KEYPRESS} keyCode={353} onKeyHandle={() => this.handleNumberKeypress("good")} />
+                <KeyHandler keyEventName={KEYPRESS} keyCode={269} onKeyHandle={() => this.handleNumberKeypress("easy")} />
+
                 <Dialog
                     title="Hotovo!"
                     actions={doneDialogActions}
@@ -193,10 +214,10 @@ class Study extends Component {
                     open={this.state.doneDialogOpen}
                 >
                     <div style={{textAlign:"center"}}>
-                    <FontIcon className="material-icons" color={greenA200} style={{fontSize:"5em", marginBottom:15}}>done</FontIcon>
-                    <br/>
-                    Pro dnešek máte všechno zopakováno. Dobrá práce!
-                        </div>
+                        <FontIcon className="material-icons" color={greenA200} style={{fontSize:"5em", marginBottom:15}}>done</FontIcon>
+                        <br/>
+                        Pro dnešek máte všechno zopakováno. Dobrá práce!
+                    </div>
                 </Dialog>
             </div>
         )

@@ -9,7 +9,6 @@ import TopicsView from "./components/topics_view";
 import AddTopic from "./components/administration/add_topic";
 import AddCard from "./components/administration/add_card";
 import Study from "./components/actions/study";
-import TodayToDo from "./components/layouts/today_to_do";
 import Dashboard from "./components/dashboard/dashboard";
 
 const routes = (

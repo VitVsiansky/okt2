@@ -12,25 +12,33 @@ class TopicsView extends Component {
         super(props);
 
         this.state = {
-            selectedTopic: ""
+            selectedTopic: "",
+            listWidth: 12,
+            detailWidth: 0,
+            hideDetail: true
         }
     }
 
     onSelect(topic) {
         this.setState({
-            selectedTopic: topic
+            selectedTopic: topic,
+            listWidth: 8,
+            detailWidth:4,
+            hideDetail: false
         });
     }
+
 
     render() {
         return (
 
             <Grid>
                 <Row>
-                    <Col md={4}>
-                        <TopicDetail selectedTopic={this.state.selectedTopic}/>
+                    <Col md={this.state.detailWidth} className={this.state.hideDetail ? 'hidden' : ''}>
+                        <TopicDetail selectedTopic={this.state.selectedTopic}
+                       />
                     </Col>
-                    <Col md={8}>
+                    <Col md={this.state.listWidth}>
                         <List>
                             <TopicsList onSelect={this.onSelect.bind(this)}
                                         viewTopic={this.props.params.topic}

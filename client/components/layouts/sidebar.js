@@ -11,9 +11,22 @@ import FitnessCenter from 'material-ui/svg-icons/places/fitness-center';
 import ClassIcon from 'material-ui/svg-icons/action/class';
 import AddToPhotos from 'material-ui/svg-icons/image/add-to-photos';
 import BorderColor from 'material-ui/svg-icons/editor/border-color';
-
+import Dialog from 'material-ui/Dialog';
+import FlatButton from 'material-ui/FlatButton';
 
 class Sidebar extends TrackerReact(React.Component) {
+    constructor(props) {
+        super(props);
+
+        this.openStudyUnavailableDialog = this.openStudyUnavailableDialog.bind(this);
+        this.closeStudyUnavailableDialog = this.closeStudyUnavailableDialog.bind(this);
+
+        this.state = {
+            studyUnavailableDialogOpen: false,
+            studyContainer: <Link to="/studovat"/>,
+            studyAllow: true
+        };
+    }
 
 
     fetchEmail() {
@@ -26,8 +39,46 @@ class Sidebar extends TrackerReact(React.Component) {
         }
     }
 
+    allowStudy(queuelength) {
+        if(queuelength>0) {
+            this.setState({
+                studyContainer: <Link to="/studovat"/>,
+                studyAllow: true
+            });
+            return (<Link to="/studovat"/>);
+        } else {
+            this.setState({
+                studyContainer: <span />,
+                studyAllow: false
+            });
+            return (<Link onClick={() => this.openStudyUnavailableDialog} />);
+        }
+    }
+
+    openStudyUnavailableDialog() {
+        if(!this.state.studyAllow) {
+            this.setState({
+                studyUnavailableDialogOpen: true
+            })
+        }
+    }
+
+    closeStudyUnavailableDialog() {
+        this.setState({
+            studyUnavailableDialogOpen: false
+        })
+    }
+
+    componentWillReceiveProps(props) {
+        this.allowStudy(props.queue.length);
+    }
+
+
+
 
     render() {
+
+
         const styles = {
             logo: {
                 cursor: 'pointer',
@@ -67,6 +118,8 @@ class Sidebar extends TrackerReact(React.Component) {
 
         let { navDrawerOpen } = this.props;
 
+
+
         return (
             <Drawer
                 docked={true}
@@ -85,13 +138,15 @@ class Sidebar extends TrackerReact(React.Component) {
                         leftIcon={<Person />}
                         containerElement={<Link to="/"/>}
                     />
+                    <div onClick={() => this.openStudyUnavailableDialog()}>
                     <MenuItem
                         key={1}
                         style={styles.menuItem}
                         primaryText="Studovat"
                         leftIcon={<FitnessCenter />}
-                        containerElement={<Link to="/studovat"/>}
+                        containerElement={this.state.studyContainer}
                     />
+                        </div>
                     <MenuItem
                         key={2}
                         style={styles.menuItem}
@@ -133,6 +188,19 @@ class Sidebar extends TrackerReact(React.Component) {
                     />
 
                 </div>
+                <Dialog
+                    title="Pro dnešek hotovo"
+                    actions={<FlatButton
+                        label="Zavřít"
+                        primary={true}
+                        onTouchTap={this.closeStudyUnavailableDialog}
+                    />}
+                    modal={false}
+                    open={this.state.studyUnavailableDialogOpen}
+                    onRequestClose={this.closeStudyUnavailableDialog}
+                >
+                    Dnes už není co studovat. Konečně můžete na pivo!
+                </Dialog>
             </Drawer>
         );
 

@@ -61,6 +61,8 @@ class App extends TrackerReact(React.Component) {
              }
         });
 
+
+
     }
 
     setTodayToDoCount(cardCount) {
@@ -68,7 +70,6 @@ class App extends TrackerReact(React.Component) {
         toDos = _.filter(toDos, {date: moment().startOf('day')});
         toDos = _.filter(toDos, {userId: Meteor.userId()});
 
-        console.log(toDos);
         if(!toDos) {
             toDos.push({
                 date: moment().startOf('day'),
@@ -90,6 +91,7 @@ class App extends TrackerReact(React.Component) {
             browserHistory.push('/login');
         }
         this.constructQueue();
+        this.listenForChanges()
     }
 
     componentDidUpdate(){
@@ -101,6 +103,7 @@ class App extends TrackerReact(React.Component) {
 
     componentDidMount() {
         this.constructQueue();
+        this.listenForChanges()
     }
 
     componentWillReceiveProps(nextProps) {
@@ -117,10 +120,26 @@ class App extends TrackerReact(React.Component) {
     }
 
 
+    listenForChanges() {
+        var timeout = false;
+        CardLogs.find({}).observeChanges({added: () => {
+            if(!timeout) {
+                this.setState({
+                    queue: [1,2]
+                });
+                timeout=true;
+            }
+
+        }});
+
+    }
+
+
 
     render() {
         let { navDrawerOpen } = this.state;
         const paddingLeftDrawerOpen = 236;
+
 
         const styles = {
             header: {

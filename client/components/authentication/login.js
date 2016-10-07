@@ -11,6 +11,7 @@ import TextField from 'material-ui/TextField';
 import {Link, browserHistory} from 'react-router';
 import ThemeDefault from '../../themes/theme-default';
 import Snackbar from 'material-ui/Snackbar';
+import {typography} from 'material-ui/styles';
 
 const styles = {
     loginContainer: {
@@ -69,6 +70,12 @@ const styles = {
     btnSpan: {
         marginLeft: 5
     },
+    title: {
+        fontSize: 24,
+        fontWeight: typography.fontWeightLight,
+        marginBottom: 10,
+        textAlign: "center"
+    }
 };
 
 var Login = React.createClass({
@@ -114,40 +121,42 @@ var Login = React.createClass({
     },
 
     render: function () {
-    return (
-        <MuiThemeProvider muiTheme={ThemeDefault} >
-            <div>
-                <div style={styles.loginContainer}>
+        return (
+            <MuiThemeProvider muiTheme={ThemeDefault} >
+                <div>
+                    <div style={styles.loginContainer}>
 
-                    <Paper style={styles.paper}>
-
-                        <form>
-                            <TextField
-                                hintText="E-mail"
-                                floatingLabelText="E-mail"
-                                fullWidth={true}
-                                onChange={this.emailChange}
-                                value={this.state.email}
-                            />
-                            <TextField
-                                hintText="Password"
-                                floatingLabelText="Password"
-                                fullWidth={true}
-                                type="password"
-                                onChange={this.passwordChange}
-                                value={this.state.password}
-                            />
-
-                            <div>
-                                <Checkbox
-                                    label="Remember me"
-                                    style={styles.checkRemember.style}
-                                    labelStyle={styles.checkRemember.labelStyle}
-                                    iconStyle={styles.checkRemember.iconStyle}
+                        <Paper style={styles.paper}>
+                            <div style={styles.title}>
+                                Přihlaste se
+                            </div>
+                            <form>
+                                <TextField
+                                    hintText="E-mail"
+                                    floatingLabelText="E-mail"
+                                    fullWidth={true}
+                                    onChange={this.emailChange}
+                                    value={this.state.email}
+                                />
+                                <TextField
+                                    hintText="Heslo"
+                                    floatingLabelText="Heslo"
+                                    fullWidth={true}
+                                    type="password"
+                                    onChange={this.passwordChange}
+                                    value={this.state.password}
                                 />
 
+                                <div>
+  {/*                                  <Checkbox
+                                        label="Remember me"
+                                        style={styles.checkRemember.style}
+                                        labelStyle={styles.checkRemember.labelStyle}
+                                        iconStyle={styles.checkRemember.iconStyle}
+                                    />*/}
 
-                                    <RaisedButton label="Login"
+
+                                    <RaisedButton label="Přihlásit"
                                                   primary={true}
                                                   type="submit"
                                                   style={styles.loginBtn}
@@ -156,34 +165,34 @@ var Login = React.createClass({
 
 
                                     />
-                            </div>
-                        </form>
-                    </Paper>
+                                </div>
+                            </form>
+                        </Paper>
 
-                    <div style={styles.buttonsDiv}>
-                        <FlatButton
-                            label="Register"
-                            href="/register"
-                            style={styles.flatButton}
-                            icon={<PersonAdd />}
-                        />
+                        <div style={styles.buttonsDiv}>
+                            <FlatButton
+                                label="Registrovat se"
+                                href="/register"
+                                style={styles.flatButton}
+                                icon={<PersonAdd />}
+                            />
 
-                        <FlatButton
-                            label="Forgot Password?"
-                            href="/"
-                            style={styles.flatButton}
-                            icon={<Help />}
-                        />
+{/*                            <FlatButton
+                                label="Forgot Password?"
+                                href="/"
+                                style={styles.flatButton}
+                                icon={<Help />}
+                            />*/}
+                        </div>
                     </div>
+                    <Snackbar
+                        open={this.state.snackbarOpen}
+                        message={this.state.snackbarMessage}
+                        autoHideDuration={5000}
+                    />
                 </div>
-                <Snackbar
-                    open={this.state.snackbarOpen}
-                    message={this.state.snackbarMessage}
-                    autoHideDuration={5000}
-                />
-            </div>
-        </MuiThemeProvider>
-    );
+            </MuiThemeProvider>
+        );
     }
 });
 

@@ -3,6 +3,7 @@ import { Meteor } from 'meteor/meteor';
 import { Topics } from "../imports/collections/topics";
 import { CardLogs } from "../imports/collections/cardlogs";
 import { ToDo } from "../imports/collections/todo";
+import { News } from "../imports/collections/news";
 
 Meteor.startup(() => {
     Meteor.publish("topics", function () {
@@ -20,6 +21,9 @@ Meteor.startup(() => {
     });
     Meteor.publish("users.all.todo", function () {
         return ToDo.find({userId:this.userId});
+    });
+    Meteor.publish("all.news", function () {
+        return News.find({});
     });
 
     Cloudinary.config({
