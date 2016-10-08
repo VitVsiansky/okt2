@@ -6,6 +6,16 @@ import { ToDo } from "../imports/collections/todo";
 import { News } from "../imports/collections/news";
 
 Meteor.startup(() => {
+
+    //Set default active cards for each new user
+    Accounts.onCreateUser(function(options, user) {
+        user.activeCards = [];
+        // We still want the default hook's 'profile' behavior.
+        if (options.profile)
+            user.profile = options.profile;
+        return user;
+    });
+
     Meteor.publish("topics", function () {
         return Topics.find({});
     });
@@ -15,7 +25,6 @@ Meteor.startup(() => {
     Meteor.publish("users.card.logs", function () {
         return CardLogs.find({userId:this.userId});
     });
-
     Meteor.publish("users.today.todo", function () {
         return ToDo.find({userId:this.userId, date: moment().endOf("day").toDate()});
     });

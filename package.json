@@ -30,6 +30,7 @@
     "react-select": "^1.0.0-rc.2",
     "react-tap-event-plugin": "^1.0.0",
     "react-tween-state": "^0.1.5",
+    "src": "^1.1.2",
     "superagent": "^2.3.0"
   }
 }

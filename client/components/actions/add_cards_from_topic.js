@@ -36,7 +36,6 @@ class AddCardsFromTopic extends TrackerReact(Component) {
         });
     }
 
-
     countRemainingCards() {
         Meteor.subscribe("topics");
         if(!this.props.selectedTopic) {
@@ -86,69 +85,84 @@ class AddCardsFromTopic extends TrackerReact(Component) {
     }
 
     addAllCards() {
+
         Meteor.subscribe("topics");
 
-        //Iterate over all topics children and fetch their cards
-        var fetchedCards=[];
-        var stack=[];
-        var item = this.props.selectedTopic;
-        stack.push(item);
-        while (stack.length>0){
-            var currentnode = stack.pop();
-            var children = Topics.find({_id:{$in:currentnode.children}});
-            children.forEach((child) => {
-                if(child.cards){
-                    fetchedCards.push(child.cards);
+        Meteor.subscribe("users.cards", () => {
+            //Iterate over all topics children and fetch their cards
+            var fetchedCards=[];
+            var stack=[];
+            var item = this.props.selectedTopic;
+            stack.push(item);
+            while (stack.length>0){
+                var currentnode = stack.pop();
+                var children = Topics.find({_id:{$in:currentnode.children}});
+                children.forEach((child) => {
+                    if(child.cards){
+                        fetchedCards.push(child.cards);
+                    }
+                    if(child.children.length>0){
+                        stack.push(child);
+                    }
+                });
+            }
+
+            //Merge the arrays of cards
+            fetchedCards.push(this.props.selectedTopic.cards);
+            fetchedCards = [].concat.apply([], fetchedCards);
+
+
+            var cardsIds = fetchedCards.map(function(a) {return a._id;});
+
+
+            //Update today to do
+
+            var userCardsIds = Meteor.users.find(Accounts.userId(), {fields: {activeCards:1}}).fetch()[0].activeCards;
+
+            var cardsIntersection = cardsIds.filter(function(n) {
+                if(userCardsIds == undefined) {
+                    return 0;
                 }
-                if(child.children.length>0){
-                    stack.push(child);
-                }
+                return userCardsIds.indexOf(n) != -1;
             });
-        }
 
-        //Merge the arrays of cards
-        fetchedCards.push(this.props.selectedTopic.cards);
-        fetchedCards = [].concat.apply([], fetchedCards);
+            //Determine which cards should be added based on current users active cards
+
+            var cardsToAdd = cardsIds.filter(function(n) {
+                if(userCardsIds == undefined) {
+                    return 0;
+                }
+                return userCardsIds.indexOf(n) == -1;
+            });
+
+            Meteor.call("update.todo.on.cards.add", cardsIds.length - cardsIntersection.length);
+
+            //Update the user collection with card Ids
+            cardsToAdd.forEach((id) => {
+                Meteor.call("add.new.card.to.logs", id);
+            });
 
 
-        var cardsIds = fetchedCards.map(function(a) {return a._id;});
+            Meteor.call("add.card.ids.to.user", cardsToAdd, (error, result) => {
+                if(error) {
+                    console.log(error);
+                } else {
+                    this.setState({
+                        dialogOpen: false,
+                        snackbarOpen: true,
+                        snackbarMessage: "Koncepty přidány"
+                    })
+                }
 
-        cardsIds.forEach((id) => {
-            Meteor.call("add.new.card.to.logs", id);
+            });
         });
 
-        //Update today to do
-        var userCardsIds = Meteor.users.find(Accounts.userId(), {fields: {activeCards:1}}).fetch()[0].activeCards;
 
-
-        var cardsIntersection = cardsIds.filter(function(n) {
-            if(userCardsIds == undefined) {
-                return 0;
-            }
-            return userCardsIds.indexOf(n) != -1;
-        });
-
-        Meteor.call("update.todo.on.cards.add", cardsIds.length - cardsIntersection.length);
-
-        //Update the user collection with card Ids
-        Meteor.call("add.card.ids.to.user", cardsIds, (error, result) => {
-            if(error) {
-                console.log(error);
-            } else {
-                this.setState({
-                    dialogOpen: false,
-                    snackbarOpen: true,
-                    snackbarMessage: "Koncepty přidány"
-                })
-            }
-
-        });
 
     }
 
 
     render() {
-        Meteor.subscribe('users.cards');
         var remainingCards = this.countRemainingCards();
         if (remainingCards === 0) {
             var disableAddTopic = true;

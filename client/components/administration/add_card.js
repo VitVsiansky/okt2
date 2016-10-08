@@ -12,6 +12,7 @@ import Snackbar from 'material-ui/Snackbar';
 import 'react-codemirror/node_modules/codemirror/mode/markdown/markdown';
 import TopicCardsTable from "./topic_cards_table";
 import Dropzone from 'react-dropzone';
+import CardsTable from "./cards_table_container";
 
 
 const styles = {
@@ -203,6 +204,7 @@ var AddCard = React.createClass({
     },
 
     render: function () {
+        console.log(this.state.topic);
         var topics = this.getTopics();
         return (
             <div>
@@ -334,7 +336,8 @@ var AddCard = React.createClass({
                     />
                 </form>
                 <div style={{marginTop: "10%"}}>
-                    <TopicCardsTable topic={this.state.topic} />
+<CardsTable topicId={this.state.topic} />
+{/*                    <TopicCardsTable topic={this.state.topic} />*/}
                 </div>
             </div>
         );

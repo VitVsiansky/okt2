@@ -65,6 +65,11 @@ Meteor.methods({
     "add.card.ids.to.user": function (Ids) {
         Meteor.users.update(Meteor.userId(), {$addToSet: {activeCards: {$each: Ids }}});
 
+    },
+
+    "update.topic": function (newTopic) {
+        console.log(newTopic);
+        Topics.update({_id:newTopic[0]._id}, newTopic[0]);
     }
 
 });
