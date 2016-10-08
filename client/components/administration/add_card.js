@@ -9,8 +9,6 @@ import Select from 'react-select';
 import 'react-select/dist/react-select.css';
 import { Topics } from "../../../imports/collections/topics";
 import Snackbar from 'material-ui/Snackbar';
-import 'react-codemirror/node_modules/codemirror/mode/markdown/markdown';
-import TopicCardsTable from "./topic_cards_table";
 import Dropzone from 'react-dropzone';
 import CardsTable from "./cards_table_container";
 
