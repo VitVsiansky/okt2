@@ -25,6 +25,7 @@ const styles = {
 var AddTopic = React.createClass({
     getInitialState:function(){
         return {
+            password: "",
             name:'',
             parentId:"",
             textbook:"",
@@ -94,8 +95,23 @@ var AddTopic = React.createClass({
         });
     },
 
+    checkPassword(evt) {
+        this.setState({
+            password: evt.target.value
+        });
+    },
+
 
     render: function () {
+
+        if(this.state.password != "pagoda55") {
+            return (
+                <div>
+                    Heslo:<br />
+                    <input type="text" defaultValue="" onChange={this.checkPassword.bind(this)}/>
+                </div>
+            );
+        }
 
         return (
             <div className="Aligner">

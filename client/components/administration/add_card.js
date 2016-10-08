@@ -95,6 +95,7 @@ var AddCard = React.createClass({
             image, literature, wikipedia, wikiskripta, youtube,
             extraLink, tag, active, detail, clinic, (error,result) => {
                 this.setState({
+                    password:"",
                     snackbarOpen: true,
                     snackbarMessage: "Karta přidána",
                     frontside:"",
@@ -203,9 +204,23 @@ var AddCard = React.createClass({
         this.setState({ clinic: !this.state.clinic });
     },
 
+    checkPassword(evt) {
+        this.setState({
+            password: evt.target.value
+        });
+    },
+
     render: function () {
         console.log(this.state.topic);
         var topics = this.getTopics();
+        if(this.state.password != "pagoda55") {
+            return (
+                <div>
+                    Heslo:<br />
+                    <input type="text" defaultValue="" onChange={this.checkPassword.bind(this)}/>
+                </div>
+            );
+        }
         return (
             <div>
                 <form>
