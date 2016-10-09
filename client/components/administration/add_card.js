@@ -93,7 +93,6 @@ var AddCard = React.createClass({
             image, literature, wikipedia, wikiskripta, youtube,
             extraLink, tag, active, detail, clinic, (error,result) => {
                 this.setState({
-                    password:"",
                     snackbarOpen: true,
                     snackbarMessage: "Karta přidána",
                     frontside:"",
