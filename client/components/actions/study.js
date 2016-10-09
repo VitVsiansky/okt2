@@ -11,6 +11,9 @@ import { browserHistory } from "react-router";
 import KeyHandler, {KEYPRESS} from 'react-key-handler';
 import IconButton from 'material-ui/IconButton';
 
+
+var ReactCSSTransitionGroup = require('react-addons-css-transition-group');
+
 class Study extends Component {
 
     constructor(props) {
@@ -184,7 +187,7 @@ class Study extends Component {
         if(this.state.queue[0].literature) {
             return (
 
-                <IconButton tooltip="Literatura">
+                <IconButton tooltip={this.state.queue[0].literature}>
                     <svg id="icon-book" viewBox="0 0 32 32" style={{width: 32, height:32}}>
                         <title>literatura</title>
                         <path class="path1" d="M28 4v26h-21c-1.657 0-3-1.343-3-3s1.343-3 3-3h19v-24h-20c-2.2 0-4 1.8-4 4v24c0 2.2 1.8 4 4 4h24v-28h-2z"></path>
@@ -233,7 +236,7 @@ class Study extends Component {
     renderBack() {
         if(this.state.showAnswer) {
             return (
-                <div>
+                <div key={1}>
                     <Paper zDepth={2} style={{marginTop: 20, paddingBottom: 40}}>
                         <div style={{paddingTop:20, paddingBottom:20, fontSize: 22, textAlign: "center"}} dangerouslySetInnerHTML={{__html: this.state.queue[0].backside}}>
 
@@ -248,7 +251,7 @@ class Study extends Component {
                             {this.renderWikipedia()}
                         </div>
 
-                        <img src={this.state.queue[0].image} style={{display:"block", margin:"0 auto"}} />
+                        <img src={this.state.queue[0].image} style={{display:"block", margin:"0 auto", maxHeight:750}} />
                     </Paper>
 
                     <BottomNavigation style={{bottom:0, position:"fixed", opacity:0.8}}>
@@ -292,7 +295,12 @@ class Study extends Component {
                 {this.renderToDo()}
                 {this.renderFront()}
                 {this.renderShowButton()}
-                {this.renderBack()}
+                <ReactCSSTransitionGroup
+                    transitionName="example"
+                    transitionEnterTimeout={300}
+                    transitionLeaveTimeout={100}>
+                    {this.renderBack()}
+                </ReactCSSTransitionGroup>
                 <KeyHandler keyEventName={KEYPRESS} keyValue="Enter" onKeyHandle={() => this.handleSpaceEnter()} />
                 <KeyHandler keyEventName={KEYPRESS} keyValue=" " onKeyHandle={() => this.handleSpaceEnter()} />
                 <KeyHandler keyEventName={KEYPRESS} keyValue="1" onKeyHandle={() => this.handleNumberKeypress("again")} />

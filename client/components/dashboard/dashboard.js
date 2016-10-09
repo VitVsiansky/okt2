@@ -10,6 +10,8 @@ import _ from "lodash";
 import NewsList from "./news_list";
 import AnswerTypesGraph from "./answer_types_graph";
 
+var ReactCSSTransitionGroup = require('react-addons-css-transition-group');
+
 import { CardLogs } from "../../../imports/collections/cardlogs";
 import { ToDo } from "../../../imports/collections/todo";
 import { News } from "../../../imports/collections/news"
@@ -171,6 +173,11 @@ class Dashboard extends TrackerReact(React.Component) {
         {this.countAnswerTypes()}
         {this.generateAnswerTypesGraphData()}
         return (
+        <ReactCSSTransitionGroup
+            transitionName="example"
+            transitionAppear={true}
+            transitionAppearTimeout={500}>
+
             <Grid>
                 <Row>
                     <Col xs={6} md={4}>
@@ -204,6 +211,7 @@ class Dashboard extends TrackerReact(React.Component) {
                     </Col>
                 </Row>
             </Grid>
+        </ReactCSSTransitionGroup>
         );
     }
 }

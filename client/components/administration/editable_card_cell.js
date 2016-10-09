@@ -7,7 +7,10 @@ class EditableCardCell extends React.Component {
         return (
             <TableRowColumn>
                 <TextField type="text" name={this.props.cellData.type} defaultValue={this.props.cellData.value} id={this.props.cellData.id}
-                onChange={this.props.onCardTableUpdate} />
+                onChange={this.props.onCardTableUpdate}
+                           multiLine={true}
+                           rows={2}
+                           rowsMax={4}/>
             </TableRowColumn>
         );
     }

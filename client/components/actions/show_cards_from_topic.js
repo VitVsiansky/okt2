@@ -105,8 +105,8 @@ class ShowCardsFromTopic extends TrackerReact(Component) {
                         <TableBody displayRowCheckbox={false}>
                             {cards.map(card =>
                                 <TableRow key={card._id}>
-                                    <TableRowColumn>{card.frontside}</TableRowColumn>
-                                    <TableRowColumn>{card.backside}</TableRowColumn>
+                                    <TableRowColumn dangerouslySetInnerHTML={{__html: card.frontside}}></TableRowColumn>
+                                    <TableRowColumn dangerouslySetInnerHTML={{__html: card.backside}}></TableRowColumn>
                                     <TableRowColumn><img src={card.image} style={{maxHeight:200, maxWidth:200}}/></TableRowColumn>
                                 </TableRow>
                             )}
