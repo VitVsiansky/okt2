@@ -154,8 +154,8 @@ class Sidebar extends TrackerReact(React.Component) {
                         leftIcon={<ClassIcon />}
                         menuItems={[
                             <MenuItem
-                                primaryText="Anatomie"
-                                containerElement={<Link to="/temata/anatomie"/>}
+                                primaryText="Embryologie"
+                                containerElement={<Link to="/temata/embryologie"/>}
                             />,
                             <MenuItem
                                 primaryText="Histologie"
