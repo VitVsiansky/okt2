@@ -15,7 +15,7 @@ class TopicsView extends Component {
             selectedTopic: "",
             listWidth: 12,
             detailWidth: 0,
-            hideDetail: true
+            hideDetail: true,
         }
     }
 
@@ -28,11 +28,17 @@ class TopicsView extends Component {
         });
     }
 
-
     render() {
+        if (this.state.viewTopic == {}) {
+            return (
+                <div>
+                    Loading...
+                </div>
+            );
+        }
         return (
 
-            <Grid>
+            <Grid  key={this.props.params.topic}>
                 <Row>
                     <Col md={this.state.detailWidth} className={this.state.hideDetail ? 'hidden' : ''}>
                         <TopicDetail selectedTopic={this.state.selectedTopic}
