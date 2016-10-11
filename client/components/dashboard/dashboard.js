@@ -9,6 +9,8 @@ import School from 'material-ui/svg-icons/social/school';
 import _ from "lodash";
 import NewsList from "./news_list";
 import AnswerTypesGraph from "./answer_types_graph";
+import { createContainer } from "meteor/react-meteor-data";
+import CircularProgress from 'material-ui/CircularProgress';
 
 var ReactCSSTransitionGroup = require('react-addons-css-transition-group');
 
@@ -172,6 +174,14 @@ class Dashboard extends TrackerReact(React.Component) {
         {this.getNews()}
         {this.countAnswerTypes()}
         {this.generateAnswerTypesGraphData()}
+
+        if (this.props.loading) {
+            return (
+                <div>
+                    <CircularProgress size={1} thickness={5} />
+                </div>
+            );
+        }
         return (
         <ReactCSSTransitionGroup
             transitionName="example"
@@ -216,4 +226,9 @@ class Dashboard extends TrackerReact(React.Component) {
     }
 }
 
-export default Dashboard;
+export default createContainer(({ }) => {
+    const logsHandle = Meteor.subscribe("users.card.logs");
+    const loading = !logsHandle.ready();
+
+    return { loading };
+}, Dashboard);

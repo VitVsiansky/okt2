@@ -34,6 +34,9 @@ Meteor.startup(() => {
     Meteor.publish("all.news", function () {
         return News.find({});
     });
+    Meteor.publish("user", function () {
+        return Meteor.users.find({_id:this.userId})
+    });
 
     Cloudinary.config({
         cloud_name: 'oktavian',

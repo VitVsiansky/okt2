@@ -21,7 +21,6 @@ class TopicDetail extends Component {
 
         return (
             <div>
-{/*                {this.renderDetail()}*/}
                 <Card>
                     {this.renderImage()}
                     <CardTitle title={this.props.selectedTopic.name}    />
