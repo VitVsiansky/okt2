@@ -4,6 +4,7 @@ import AddCardsFromTopic from "./actions/add_cards_from_topic";
 import TopicProgress from "./layouts/topic_progress";
 import ShowCardsFromTopic from "./actions/show_cards_from_topic";
 import Drill from "./actions/drill";
+import ReactCSSTransitionReplace from 'react-css-transition-replace';
 
 class TopicDetail extends Component {
 
@@ -20,7 +21,10 @@ class TopicDetail extends Component {
     render() {
 
         return (
-            <div>
+            <ReactCSSTransitionReplace transitionName="carousel-swap" 
+                               transitionEnterTimeout={300} transitionLeaveTimeout={300}>
+            <div  key={this.props.selectedTopic.name}>
+
                 <Card>
                     {this.renderImage()}
                     <CardTitle title={this.props.selectedTopic.name}    />
@@ -42,7 +46,9 @@ class TopicDetail extends Component {
 
                     </CardActions>
                 </Card>
+
             </div>
+                                        </ReactCSSTransitionReplace>
         );
 
     }

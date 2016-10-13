@@ -4,7 +4,6 @@ import {Table, TableBody, TableHeader, TableHeaderColumn, TableRow, TableRowColu
 
 class TopicsTable extends Component {
     render() {
-        console.log(this.props);
         return(
           <Table>
               <TableHeader displaySelectAll={false}

@@ -69,6 +69,10 @@ class Sidebar extends TrackerReact(React.Component) {
         })
     }
 
+    componentDidMount() {
+        this.allowStudy(this.props.queue.length);
+    }
+
     componentWillReceiveProps(props) {
         this.allowStudy(props.queue.length);
     }

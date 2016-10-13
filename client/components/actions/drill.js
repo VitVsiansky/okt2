@@ -170,7 +170,6 @@ class Drill extends Component {
 
     renderBack() {
         if(this.state.showAnswer && this.state.queue.length > 0) {
-            console.log("back");
             return (
                 <div>
                     <Paper zDepth={2} style={{marginTop: 20, paddingBottom: 40}}>

@@ -10,6 +10,11 @@ import AddTopic from "./components/administration/add_topic";
 import AddCard from "./components/administration/add_card";
 import Study from "./components/actions/study";
 import Dashboard from "./components/dashboard/dashboard";
+import injectTapEventPlugin from 'react-tap-event-plugin';
+
+// Needed for onTouchTap
+// http://stackoverflow.com/a/34015469/988941
+injectTapEventPlugin();
 
 const routes = (
     <Router history={browserHistory}>
