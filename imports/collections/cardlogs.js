@@ -25,9 +25,10 @@ Meteor.methods({
         );
     },
 
-    "answer.card": function (quality, cardId) {
+    "answer.card": function (quality, cardId, againDueDate) {
         var card = CardLogs.find({"cardId": cardId, userId: Meteor.userId()}).fetch()[0];
         console.log("logging card from call " + card.cardId);
+        console.log(againDueDate);
         const EF = card.EF;
         const repCount = card.repCount;
         const lastInterval = card.lastInterval;
@@ -90,7 +91,7 @@ Meteor.methods({
                     "cardId": cardId,
                     userId: Meteor.userId()},
                 {$set: {
-                    dueDate: moment(23, "HH").toDate(),
+                    dueDate: againDueDate,
                     EF: computeEF("again"),
                     lastInterval: 0,
                     repCount: 0,

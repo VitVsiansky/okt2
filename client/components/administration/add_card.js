@@ -208,7 +208,6 @@ var AddCard = React.createClass({
     },
 
     render: function () {
-        console.log(this.state.topic);
         var topics = this.getTopics();
         if(this.state.password != "pagoda55") {
             return (

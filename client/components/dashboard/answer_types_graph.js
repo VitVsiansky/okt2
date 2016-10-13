@@ -15,14 +15,12 @@ const styles = {
 class AnswerTypesGraph extends React.Component {
 
     getData() {
-        console.log(this.props.data);
         if(this.props.data.datasets) {
            return (<Doughnut data={this.props.data}/>);
         }
     }
 
     render() {
-        console.log(this.props);
         return (
             <Paper>
             <div>

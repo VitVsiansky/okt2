@@ -32,15 +32,12 @@ class CardsTable extends React.Component {
             return card;
         });
 
-        console.log(newCards);
-
         topic[0].cards = newCards;
 
         this.setState({
             topic: topic
         });
 
-        console.log(this.state.topic);
 
         //Call an update method with this.state.topic
 Meteor.call("update.topic", this.state.topic);

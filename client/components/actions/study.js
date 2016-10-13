@@ -11,6 +11,8 @@ import { browserHistory } from "react-router";
 import KeyHandler, {KEYPRESS} from 'react-key-handler';
 import IconButton from 'material-ui/IconButton';
 
+var ReactCSSTransitionGroup = require('react-addons-css-transition-group');
+
 
 var ReactCSSTransitionGroup = require('react-addons-css-transition-group');
 
@@ -30,18 +32,23 @@ class Study extends Component {
 
     componentWillReceiveProps(props) {
         this.setState({
-            queue: props.queue
+            queue: props.queue,
+            againDueDate: props.againDueDate
         });
     }
 
     componentDidMount() {
+        this.setState({
+            queue: this.props.queue,
+            againDueDate: this.props.againDueDate
+        });
 
         {this.renderToDo()}
     }
 
     renderToDo() {
         return (
-            <TodayToDo/>
+            <TodayToDo queueLength={this.props.queue.length} cardsToDoToday={this.props.cardsToDoToday} />
         );
     }
 
@@ -50,7 +57,7 @@ class Study extends Component {
         var queue = this.state.queue;
 
         //Call server to update logs, no need to wait
-        Meteor.call("answer.card", quality, id);
+        Meteor.call("answer.card", quality, id, this.props.againDueDate);
 
 
         //Handling repeats
@@ -142,7 +149,14 @@ class Study extends Component {
     renderShowButton() {
         if(!this.state.showAnswer) {
             return (
-                <RaisedButton label="Odpověď" primary={true} onClick={() => this.showAnswer()} style={{display:"block", margin:"0 auto"}}/>
+                
+                    <BottomNavigation style={{bottom:0, position:"fixed", opacity:0.8}}>
+                        <BottomNavigationItem
+                            label="Odpověď"
+                            icon={<FontIcon className="material-icons">visibility</FontIcon>}
+                            onTouchTap={() => this.showAnswer()}
+                        />
+                    </BottomNavigation>
             );
         }
     }
@@ -251,7 +265,7 @@ class Study extends Component {
                             {this.renderWikipedia()}
                         </div>
 
-                        <img src={this.state.queue[0].image} style={{display:"block", margin:"0 auto", maxHeight:750}} />
+                        <img src={this.state.queue[0].image} style={{display:"block", margin:"0 auto", maxHeight:800, maxWidth:800}} />
                     </Paper>
 
                     <BottomNavigation style={{bottom:0, position:"fixed", opacity:0.8}}>
@@ -291,6 +305,12 @@ class Study extends Component {
         ];
 
         return (
+             <ReactCSSTransitionGroup
+                transitionName="example"
+                transitionAppear={true}
+                transitionAppearTimeout={500}
+                transitionEnterTimeout={500}
+                transitionLeaveTimeout={500}>
             <div>
                 {this.renderToDo()}
                 {this.renderFront()}
@@ -325,6 +345,7 @@ class Study extends Component {
                     </div>
                 </Dialog>
             </div>
+                        </ReactCSSTransitionGroup>
         )
     }
 }

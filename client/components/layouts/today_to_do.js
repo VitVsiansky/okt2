@@ -6,13 +6,7 @@ import TrackerReact from 'meteor/ultimatejs:tracker-react';
 import LinearProgress from 'material-ui/LinearProgress';
 
 class TodayToDo extends TrackerReact(Component) {
-    constructor(props) {
-        super(props);
-        this.state = {
-            cardsDoneToday: 0,
-            cardsToDo: 0
-        };
-    }
+/*    
 
     countCardsDoneToday() {
         Meteor.subscribe("users.card.logs", () => {
@@ -55,12 +49,30 @@ class TodayToDo extends TrackerReact(Component) {
         {this.countCardsDoneToday()}
         {this.countCardsToDo()}
         {this.listenToAnswer()}
+    }*/
+
+    constructor(props) {
+        super(props);
+        this.state = {
+            queueLength: 0,
+            cardsToDoToday: 0
+        };
+    }
+
+    componentWillReceiveProps(props) {
+        this.setState({
+            queueLength: props.queueLength,
+            cardsToDoToday: props.cardsToDoToday
+        });
+
     }
 
     render() {
+
         return (
             <div>
-                <LinearProgress style={{height:5}} mode="determinate" value={Math.round((this.state.cardsDoneToday/this.state.cardsToDo)*100)} />
+                <LinearProgress style={{height:5}} mode="determinate"
+                 value={Math.round(((this.props.cardsToDoToday - this.props.queueLength)/this.props.cardsToDoToday)*100)} />
             </div>
         );
     }
