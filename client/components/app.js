@@ -13,6 +13,7 @@ import { CardLogs } from "../../imports/collections/cardlogs";
 import { Topics } from "../../imports/collections/topics";
 import { ToDo } from "../../imports/collections/todo";
 import _ from "lodash";
+import { createContainer } from "meteor/react-meteor-data";
 
 // Needed for onTouchTap
 // http://stackoverflow.com/a/34015469/988941
@@ -175,4 +176,42 @@ class App extends TrackerReact(React.Component) {
 }
 
 
-export default withWidth()(App);
+export default createContainer(() => {
+    Meteor.subscribe("users.card.logs");
+    const topicsHandle = Meteor.subscribe('topics');
+    const loading = !topicsHandle.ready();
+    if(loading) {
+        return { loading }
+    }
+    else {
+            var topics = Topics.find({}).fetch();
+
+            //Queue resets every day after 23:00
+            var today = new Date();
+            today.setHours(23);
+
+            //Find and sort users cards by dueDate
+            var due = CardLogs.find({ "dueDate" : {"$lt" : today }}, {sort: {dueDate: 1}});
+
+            //Build a queue using the fetched cards from CardLogs collection
+            var queue =[];
+
+            due.forEach((cardLog) => {
+                var filtered = _.filter(topics, {cards: [{_id: cardLog.cardId}] });
+                if(filtered[0]) {
+                    card = _.filter(filtered[0].cards, {_id: cardLog.cardId});
+                    queue.push(card);
+                }
+            });
+
+            queue = [].concat.apply([], queue);
+
+            Meteor.
+
+            return { loading, queue}
+    }
+
+}, withWidth()(App));
+
+
+// export default withWidth()(App);
