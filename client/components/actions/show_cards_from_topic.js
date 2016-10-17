@@ -8,6 +8,11 @@ import FlatButton from 'material-ui/FlatButton';
 import Visibility from 'material-ui/svg-icons/action/visibility';
 import {pink600} from 'material-ui/styles/colors';
 
+const dialogStyle = {
+    width: '100%',
+    maxWidth: 'none',
+};
+
 class ShowCardsFromTopic extends TrackerReact(Component) {
     constructor(props) {
         super(props);
@@ -89,6 +94,7 @@ class ShowCardsFromTopic extends TrackerReact(Component) {
                         />
                     ]}
                     modal={false}
+                    contentStyle={dialogStyle}
                     autoScrollBodyContent={true}
                     open={this.state.dialogOpen}
                     onRequestClose={this.handleDialogClose}
@@ -105,7 +111,7 @@ class ShowCardsFromTopic extends TrackerReact(Component) {
                         <TableBody displayRowCheckbox={false}>
                             {cards.map(card =>
                                 <TableRow key={card._id}>
-                                    <TableRowColumn dangerouslySetInnerHTML={{__html: card.frontside}}></TableRowColumn>
+                                    <TableRowColumn style={{whiteSpace: 'normal', wordWrap: 'break-word'}} dangerouslySetInnerHTML={{__html: card.frontside}}></TableRowColumn>
                                     <TableRowColumn dangerouslySetInnerHTML={{__html: card.backside}}></TableRowColumn>
                                     <TableRowColumn><img src={card.image} style={{maxHeight:200, maxWidth:200}}/></TableRowColumn>
                                 </TableRow>
