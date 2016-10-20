@@ -1,5 +1,6 @@
 import React, { Component } from "react";
-import {ListItem} from 'material-ui/List';
+import {ListItem, List } from 'material-ui/List';
+import Subheader from 'material-ui/Subheader';
 import { createContainer } from "meteor/react-meteor-data";
 
 import { Topics } from "../../imports/collections/topics";
@@ -24,7 +25,10 @@ class TopicsList extends Component {
             <ListItem key={child._id}
                       primaryText={child.name}
                       nestedItems={this.getAllChildren(child.children)}
-                      onClick={() => this.setSelectedTopic(child)}>
+                      onClick={() => this.setSelectedTopic(child)}
+                      primaryTogglesNestedList={true}
+                      >
+                      
             </ListItem>);
     }
 
@@ -46,19 +50,12 @@ class TopicsList extends Component {
     }
 
     render() {
-
         return (
-            <div>
-{/*                    {Topics.find({name:this.props.viewTopic}).fetch().map(topic =>
-                    <ListItem key={topic._id}
-                              primaryText={topic.name}
-                              nestedItems={this.getAllChildren(topic.children)}
-                              onClick={() => this.setSelectedTopic(topic)}>
-                    </ListItem>
-                    )}*/}
+            <List>
+
                 {this.state.selectedTopics}
 
-            </div>
+            </List>
         );
     }
 }

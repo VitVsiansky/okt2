@@ -31,6 +31,7 @@ class TopicsView extends Component {
     }
 
     render() {
+        console.log(this.state.selectedTopic);
         if (this.state.viewTopic == {}) {
             return (
                 <div>
@@ -39,51 +40,56 @@ class TopicsView extends Component {
             );
         }
 
-        if(!this.state.selectedTopic) {
+        if (!this.state.selectedTopic) {
             return (
-                 <ReactCSSTransitionGroup
-                transitionName="example"
-                transitionAppear={true}
-                transitionAppearTimeout={500}
-                transitionEnterTimeout={500}
-                transitionLeaveTimeout={500}>
-            <div key={this.props.params.topic}>
-                <div className="row">
-                    <div className="col-xs-12 col-sm-12 col-md-12 col-lg-12 m-b-15">
-                        <TopicsList onSelect={this.onSelect.bind(this)}
-                            viewTopic={this.props.params.topic}
-                            />
-                    </div>
+                <ReactCSSTransitionGroup
+                    transitionName="example"
+                    transitionAppear={true}
+                    transitionAppearTimeout={500}
+                    transitionEnterTimeout={500}
+                    transitionLeaveTimeout={500}>
+                    <div key={this.props.params.topic}>
+                        <div className="row">
+                            <div>
+                                <TopicDetail isTopicSelected={false} />
+                            </div>
+                            <div className="col-xs-12 col-sm-12 col-md-12 col-lg-12 m-b-15">
+                                <TopicsList onSelect={this.onSelect.bind(this)}
+                                    viewTopic={this.props.params.topic}
+                                    />
+                            </div>
 
-                </div>
-            </div>
-             </ReactCSSTransitionGroup>
+                        </div>
+                    </div>
+                </ReactCSSTransitionGroup>
             );
         }
 
 
         return (
-             <ReactCSSTransitionGroup
+            <ReactCSSTransitionGroup
                 transitionName="example"
                 transitionAppear={true}
                 transitionAppearTimeout={500}
                 transitionEnterTimeout={500}
                 transitionLeaveTimeout={500}>
-            <div key={this.props.params.topic}>
-                <div className="row">
-                    <div className="col-xs-12 col-sm-12 col-md-4 col-lg-4 m-b-15">
-                        <TopicDetail selectedTopic={this.state.selectedTopic}
-                            />
-                    </div>
-                    <div className="col-xs-12 col-sm-12 col-md-8 col-lg-8 m-b-15">
-                        <TopicsList onSelect={this.onSelect.bind(this)}
-                            viewTopic={this.props.params.topic}
-                            />
-                    </div>
+                <div key={this.props.params.topic}>
+                    <div className="row">
+                        <div className="col-xs-12 col-sm-12 col-md-4 col-lg-4 m-b-15">
+                            <TopicDetail
+                                selectedTopic={this.state.selectedTopic}
+                                isTopicSelected={true}
+                                />
+                        </div>
+                        <div className="col-xs-12 col-sm-12 col-md-8 col-lg-8 m-b-15">
+                            <TopicsList onSelect={this.onSelect.bind(this)}
+                                viewTopic={this.props.params.topic}
+                                />
+                        </div>
 
+                    </div>
                 </div>
-            </div>
-             </ReactCSSTransitionGroup>
+            </ReactCSSTransitionGroup>
 
         );
     }
