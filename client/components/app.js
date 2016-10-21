@@ -27,6 +27,7 @@ class App extends React.Component {
 
         this.state = {
              isAuthenticated: Meteor.userId() !== null,
+             isAdmin: (Meteor.userId() === "6gcFCct9DLx2mFgiv" || Meteor.userId() === "inH9qvPRYXMWW6G93"),
             navDrawerOpen: false,
             queue: [],
             cardsToDoCount: []
@@ -104,6 +105,7 @@ class App extends React.Component {
                         menus={Data.menus}
                         username="User Admin"
                         queue={this.props.queue}
+                        isAdmin={this.state.isAdmin}
                         />
 
                     <div style={styles.container}>

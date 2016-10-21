@@ -14,6 +14,45 @@ import BorderColor from 'material-ui/svg-icons/editor/border-color';
 import Dialog from 'material-ui/Dialog';
 import FlatButton from 'material-ui/FlatButton';
 
+
+
+        const styles = {
+            logo: {
+                cursor: 'pointer',
+                fontSize: 22,
+                color: typography.textFullWhite,
+                lineHeight: `${spacing.desktopKeylineIncrement}px`,
+                fontWeight: typography.fontWeightLight,
+                backgroundColor: blue600,
+                paddingLeft: 40,
+                height: 56,
+            },
+            menuItem: {
+                color: white,
+                fontSize: 14
+            },
+            avatar: {
+                div: {
+                    padding: '15px 0 20px 15px',
+                    backgroundImage: "url('http://res.cloudinary.com/oktavian/image/upload/v1475619644/source_images/material_bg.png')",
+                    height: 45
+                },
+                icon: {
+                    float: 'left',
+                    display: 'block',
+                    marginRight: 15,
+                    boxShadow: '0px 0px 0px 8px rgba(0,0,0,0.2)'
+                },
+                span: {
+                    paddingTop: 12,
+                    display: 'block',
+                    color: 'white',
+                    fontWeight: 300,
+                    textShadow: '1px 1px #444'
+                }
+            }
+        };
+
 class Sidebar extends TrackerReact(React.Component) {
     constructor(props) {
         super(props);
@@ -77,52 +116,36 @@ class Sidebar extends TrackerReact(React.Component) {
         this.allowStudy(props.queue.length);
     }
 
+    showAdminControls() {
+        if(this.props.isAdmin) {
+            return (
+                <div>
+                                    <MenuItem
+                        key={3}
+                        style={styles.menuItem}
+                        primaryText="Přidat téma"
+                        leftIcon={<AddToPhotos />}
+                        containerElement={<Link to="/admin/pridattema"/>}
+                    />
+                    <MenuItem
+                        key={4}
+                        style={styles.menuItem}
+                        primaryText="Přidat kartu"
+                        leftIcon={<BorderColor />}
+                        containerElement={<Link to="/admin/pridatkartu"/>}
+                    />
+                </div>
+            );
+        }
+    }
+
 
 
 
     render() {
 
 
-        const styles = {
-            logo: {
-                cursor: 'pointer',
-                fontSize: 22,
-                color: typography.textFullWhite,
-                lineHeight: `${spacing.desktopKeylineIncrement}px`,
-                fontWeight: typography.fontWeightLight,
-                backgroundColor: blue600,
-                paddingLeft: 40,
-                height: 56,
-            },
-            menuItem: {
-                color: white,
-                fontSize: 14
-            },
-            avatar: {
-                div: {
-                    padding: '15px 0 20px 15px',
-                    backgroundImage: "url('http://res.cloudinary.com/oktavian/image/upload/v1475619644/source_images/material_bg.png')",
-                    height: 45
-                },
-                icon: {
-                    float: 'left',
-                    display: 'block',
-                    marginRight: 15,
-                    boxShadow: '0px 0px 0px 8px rgba(0,0,0,0.2)'
-                },
-                span: {
-                    paddingTop: 12,
-                    display: 'block',
-                    color: 'white',
-                    fontWeight: 300,
-                    textShadow: '1px 1px #444'
-                }
-            }
-        };
-
         let { navDrawerOpen } = this.props;
-
-
 
         return (
             <Drawer
@@ -159,28 +182,20 @@ class Sidebar extends TrackerReact(React.Component) {
                         menuItems={[
                             <MenuItem
                                 primaryText="Embryologie"
-                                containerElement={<Link to="/temata/embryologie"/>}
-                            />,
+                                containerElement={<Link to="/temata/embryologie" />}
+                                />,
                             <MenuItem
                                 primaryText="Histologie"
-                                containerElement={<Link to="/temata/histologie"/>}
-                            />
+                                containerElement={<Link to="/temata/histologie" />}
+                                />,
+                            <MenuItem
+                                primaryText="Biochemie"
+                                containerElement={<Link to="/temata/biochemie" />}
+                                />
                         ]}
                         />
-                    <MenuItem
-                        key={3}
-                        style={styles.menuItem}
-                        primaryText="Přidat téma"
-                        leftIcon={<AddToPhotos />}
-                        containerElement={<Link to="/admin/pridattema"/>}
-                    />
-                    <MenuItem
-                        key={4}
-                        style={styles.menuItem}
-                        primaryText="Přidat kartu"
-                        leftIcon={<BorderColor />}
-                        containerElement={<Link to="/admin/pridatkartu"/>}
-                    />
+
+{this.showAdminControls()}
 
                 </div>
                 <Dialog
