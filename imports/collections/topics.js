@@ -67,6 +67,11 @@ Meteor.methods({
 
     },
 
+        "delete.card.from.active": function (cardId) {
+        Meteor.users.update({}, {$pull: {activeCards: cardId}}, { multi: true } );
+
+    },
+
     "update.topic": function (newTopic) {
         console.log(newTopic);
         Topics.update({_id:newTopic[0]._id}, newTopic[0]);
