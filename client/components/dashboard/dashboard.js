@@ -11,6 +11,7 @@ import NewsList from "./news_list";
 import AnswerTypesGraph from "./answer_types_graph";
 import { createContainer } from "meteor/react-meteor-data";
 import CircularProgress from 'material-ui/CircularProgress';
+import Paper from 'material-ui/Paper';
 
 var ReactCSSTransitionGroup = require('react-addons-css-transition-group');
 
@@ -21,6 +22,7 @@ import { News } from "../../../imports/collections/news"
 class Dashboard extends TrackerReact(React.Component) {
 
     render() {
+        console.log(this.props.isUserNew);
 
         if (this.props.loading) {
             return (
@@ -29,6 +31,34 @@ class Dashboard extends TrackerReact(React.Component) {
                 </div>
             );
         }
+
+        if (this.props.isUserNew) {
+            return (
+                <ReactCSSTransitionGroup
+                transitionName="example"
+                transitionAppear={true}
+                transitionAppearTimeout={500}
+                transitionEnterTimeout={500}
+                transitionLeaveTimeout={500}>
+<div className="row">
+<div className="col-xs-12 col-sm-12 col-md-12 col-lg-12 m-b-15 ">
+                <Paper style={{padding:40}}>
+                <h3> Poprvé na Oktaviánovi? </h3>
+
+                <p> Vyberte si téma, přidejte koncepty a můžete začít efektivněji studovat!</p>
+                <br />
+
+                <video style={{maxWidth: '65%'}} autoPlay loop >
+                <source src="http://res.cloudinary.com/oktavian/video/upload/v1477160601/ice_video_20161022-201909_teh9no.webm" type="video/webm" />
+                </video>
+                </Paper>
+                </div>
+                </div>
+
+                </ReactCSSTransitionGroup>
+            );
+        }
+
         return (
             <ReactCSSTransitionGroup
                 transitionName="example"

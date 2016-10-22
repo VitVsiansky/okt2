@@ -22,7 +22,7 @@ class TopicProgress extends TrackerReact(Component) {
         return (
             <div>
                 <div style={{ textAlign: "center" }}>
-                    {this.props.userCardCount}/ {this.props.topicCardCount}konceptů přidáno
+                    {this.props.userCardCount} / {this.props.topicCardCount} konceptů přidáno
                 </div>
                 <br />
                 <LinearProgress style={{ height: 10 }} mode="determinate" value={(this.props.userCardCount / this.props.topicCardCount) * 100} />

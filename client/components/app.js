@@ -112,7 +112,8 @@ class App extends React.Component {
                         {React.cloneElement(this.props.children, {
                             queue: this.props.queue,
                             againDueDate: this.props.againDueDate,
-                            cardsToDoToday: this.props.cardsToDoToday
+                            cardsToDoToday: this.props.cardsToDoToday,
+                            isUserNew: this.props.isUserNew
                         })}
                     </div>
                 </div>
@@ -125,6 +126,7 @@ class App extends React.Component {
 const AppContainer = withWidth()(App);
 
 export default createContainer(() => {
+    Meteor.subscribe("user");
     Meteor.subscribe("users.card.logs");
     Meteor.subscribe("users.today.todo");
     const topicsHandle = Meteor.subscribe('topics');
@@ -174,8 +176,18 @@ export default createContainer(() => {
 
         var cardsToDoToday = ToDo.find({}).fetch()[0].count;
 
+        //When the user is new (no active cards) display a tutorial on the dashboard
 
-        return { loading, queue, againDueDate, cardsToDoToday }
+        var isUserNew;
+
+        if(Meteor.users.find({_id:Meteor.userId()}).fetch()[0].activeCards.length === 0) {
+            isUserNew = true;
+        } else {
+            isUserNew = false;
+        }
+
+
+        return { loading, queue, againDueDate, cardsToDoToday, isUserNew }
 
 
 
