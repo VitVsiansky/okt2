@@ -189,6 +189,10 @@ class Sidebar extends TrackerReact(React.Component) {
                                 containerElement={<Link to="/temata/histologie" />}
                                 />,
                             <MenuItem
+                                primaryText="Fyziologie"
+                                containerElement={<Link to="/temata/fyziologie" />}
+                                />,
+                            <MenuItem
                                 primaryText="Biochemie"
                                 containerElement={<Link to="/temata/biochemie" />}
                                 />
